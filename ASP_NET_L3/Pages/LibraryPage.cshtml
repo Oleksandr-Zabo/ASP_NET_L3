@@ -1,0 +1,311 @@
+﻿@page
+@model ASP_NET_L3.Pages.LibraryPageModel
+@{
+    ViewData["Title"] = "Library";
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .library-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        color: #007bff;
+        margin-top: 40px;
+        margin-bottom: 20px;
+        font-size: 1.8em;
+        border-bottom: 2px solid #007bff;
+        padding-bottom: 10px;
+    }
+
+    .section {
+        margin-bottom: 50px;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background-color: white;
+    }
+
+    table thead {
+        background-color: #007bff;
+        color: white;
+    }
+
+    table th,
+    table td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    table tbody tr:hover {
+        background-color: #e9ecef;
+    }
+
+    table td {
+        color: #555;
+    }
+
+    table td:first-child {
+        font-weight: bold;
+    }
+
+    /* Filters */
+    .filters-form {
+        background-color: #f9f9f9;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .filter-row {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+
+    .filter-group {
+        flex: 1;
+        min-width: 200px;
+    }
+
+    .filter-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    .filter-group input,
+    .filter-group select {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    .filter-group input:focus,
+    .filter-group select:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+    /* Buttons */
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 14px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .actions {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    /* Empty state */
+    .empty-message {
+        text-align: center;
+        color: #999;
+        font-style: italic;
+        padding: 20px;
+    }
+</style>
+
+<div class="library-container">
+    <h1>Library</h1>
+
+    <!-- Authors Section -->
+    <div class="section">
+        <h2>Authors</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Birth Date</th>
+                    <th>Books Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Authors != null && Model.Authors.Any())
+                {
+                    @foreach (var author in Model.Authors)
+                    {
+                        <tr>
+                            <td>@author.FullName</td>
+                            <td>@author.BirthDate.ToString("yyyy-MM-dd")</td>
+                            <td>@author.BookCount</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4" class="empty-message">No authors found</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Books Section -->
+    <div class="section">
+        <h2>Books</h2>
+
+        <!-- Filters -->
+        <form method="get" class="filters-form">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="SearchTitle">Search by Title:</label>
+                    <input type="text" id="SearchTitle" name="SearchTitle" value="@Model.SearchTitle" placeholder="Enter book title..." />
+                </div>
+
+                <div class="filter-group">
+                    <label for="FilterAuthorId">Filter by Author:</label>
+                    <select id="FilterAuthorId" name="FilterAuthorId">
+                        <option value="">-- All Authors --</option>
+                        @if (Model.AllAuthors != null)
+                        {
+                            @foreach (var author in Model.AllAuthors)
+                            {
+                                <option value="@author.Id" selected="@(Model.FilterAuthorId == author.Id)">
+                                    @author.FirstName @author.LastName
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label for="SortBy">Sort by:</label>
+                    <select id="SortBy" name="SortBy">
+                        <option value="Title" selected="@(Model.SortBy == "Title")">Title</option>
+                        <option value="Year" selected="@(Model.SortBy == "Year")">Publish Year</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="SortOrder">Order:</label>
+                    <select id="SortOrder" name="SortOrder">
+                        <option value="ASC" selected="@(Model.SortOrder == "ASC")">Ascending</option>
+                        <option value="DESC" selected="@(Model.SortOrder == "DESC")">Descending</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="filter-actions">
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                <a href="/Library" class="btn btn-secondary">Clear Filters</a>
+            </div>
+        </form>
+
+        <!-- Books Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>ISBN</th>
+                    <th>Publish Year</th>
+                    <th>Price</th>
+                    <th>Author</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Books != null && Model.Books.Any())
+                {
+                    @foreach (var book in Model.Books)
+                    {
+                        <tr>
+                            <td>@book.Title</td>
+                            <td>@book.ISBN</td>
+                            <td>@book.PublishYear</td>
+                            <td>@(book.Price.HasValue ? book.Price.Value.ToString("C") : "N/A")</td>
+                            <td>@book.AuthorFullName</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="empty-message">No books found</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="actions">
+        <a href="/AddPage" class="btn btn-success">Add New Author or Book</a>
+    </div>
+</div>

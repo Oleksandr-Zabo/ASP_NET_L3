@@ -1,0 +1,16 @@
+﻿@page
+@model ASP_NET_L3.Pages.IndexInputModel
+@{
+}
+
+<div>
+    <form method="post">
+        <input type="text" name="FirstName" asp-for="Input.FirstName" />
+        <input type="text" name="LastName" asp-for="Input.LastName" />
+        <button type="submit" asp-page-handler="Save">Save</button>
+        <button type="submit" asp-page-handler="Delete">Delete</button>
+    </form>
+
+    <h1>Hello, @Model.FirstName @Model.LastName :)</h1>
+    <span>@Model.CreatedDate</span>
+</div>
