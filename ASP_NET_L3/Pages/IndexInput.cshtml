@@ -5,12 +5,12 @@
 
 <div>
     <form method="post">
-        <input type="text" name="FirstName" asp-for="Input.FirstName" />
-        <input type="text" name="LastName" asp-for="Input.LastName" />
+        <input type="text" name="FirstName" asp-for="User.FirstName" />
+        <input type="text" name="LastName" asp-for="User.LastName" />
         <button type="submit" asp-page-handler="Save">Save</button>
         <button type="submit" asp-page-handler="Delete">Delete</button>
     </form>
 
-    <h1>Hello, @Model.FirstName @Model.LastName :)</h1>
-    <span>@Model.CreatedDate</span>
+    <h1>Hello, @Model.User.FirstName @Model.User.LastName :)</h1>
+    <span>@Model.User.CreatedDate</span>
 </div>

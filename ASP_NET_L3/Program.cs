@@ -1,6 +1,8 @@
+using ASP_NET_L3.Abstract;
 using ASP_NET_L3.DAL;
 using ASP_NET_L3.DAL.Abstracts;
 using ASP_NET_L3.DAL.Repositories;
+using ASP_NET_L3.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
 
@@ -19,11 +21,16 @@ namespace ASP_NET_L3
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseSqlServer(
                     builder.Configuration.GetConnectionString("DefaultConnection")));
-
+            
             // Register repositories
             builder.Services.AddScoped<IUserRepository, UserRepository>();
             builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
             builder.Services.AddScoped<IBookRepository, BookRepository>();
+
+            //Register Services
+            builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IAuthorService, AuthorService>();
+            builder.Services.AddScoped<IBookService, BookService>();
 
 
             var app = builder.Build();

@@ -3,7 +3,6 @@ using ASP_NET_L3.DAL.Entities;
 using ASP_NET_L3.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 
 namespace ASP_NET_L3.Pages
 {
@@ -32,8 +31,8 @@ namespace ASP_NET_L3.Pages
         public string SortOrder { get; set; } = "ASC";
 
         // Data lists
-        public List<AuthorViewModel> Authors { get; set; }
-        public List<BookViewModel> Books { get; set; }
+        public List<AuthorDTO> Authors { get; set; }
+        public List<BookDTO> Books { get; set; }
         public List<Author> AllAuthors { get; set; }
 
         public void OnGet()
@@ -42,11 +41,12 @@ namespace ASP_NET_L3.Pages
             var allAuthors = _authorRepository.GetAll();
             var allBooks = _bookRepository.GetAll();
 
-            Authors = allAuthors.Select(a => new AuthorViewModel
+            Authors = allAuthors.Select(a => new AuthorDTO
             {
                 Id = a.Id,
-                FullName = $"{a.FirstName} {a.LastName}",
-                BirthDate = a.BirthDate,
+                FirstName = a.FirstName,
+                LastName = a.LastName,
+                BirthDate = a.BirthDate.ToShortDateString(),
                 BookCount = allBooks.Count(b => b.AuthorId == a.Id)
             }).ToList();
 
@@ -72,7 +72,7 @@ namespace ASP_NET_L3.Pages
                 _ => SortOrder == "DESC" ? booksQuery.OrderByDescending(b => b.Title) : booksQuery.OrderBy(b => b.Title)
             };
 
-            Books = booksQuery.Select(b => new BookViewModel
+            Books = booksQuery.Select(b => new BookDTO
             {
                 Id = b.Id,
                 Title = b.Title,

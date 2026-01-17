@@ -201,8 +201,8 @@
                     @foreach (var author in Model.Authors)
                     {
                         <tr>
-                            <td>@author.FullName</td>
-                            <td>@author.BirthDate.ToString("yyyy-MM-dd")</td>
+                            <td>@author.FirstName @author.LastName</td>
+                            <td>@author.BirthDate</td>
                             <td>@author.BookCount</td>
                         </tr>
                     }
@@ -210,7 +210,7 @@
                 else
                 {
                     <tr>
-                        <td colspan="4" class="empty-message">No authors found</td>
+                        <td colspan="3" class="empty-message">No authors found</td>
                     </tr>
                 }
             </tbody>
@@ -266,7 +266,7 @@
 
             <div class="filter-actions">
                 <button type="submit" class="btn btn-primary">Apply Filters</button>
-                <a href="/Library" class="btn btn-secondary">Clear Filters</a>
+                <a href="/LibraryPage" class="btn btn-secondary">Clear Filters</a>
             </div>
         </form>
 

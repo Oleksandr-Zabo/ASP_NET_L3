@@ -1,56 +1,45 @@
+using ASP_NET_L3.Abstract;
 using ASP_NET_L3.DAL;
 using ASP_NET_L3.DAL.Abstracts;
+using ASP_NET_L3.DAL.Entities;
 using ASP_NET_L3.Models;
+using ASP_NET_L3.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+
 
 namespace ASP_NET_L3.Pages
 {
     public class IndexInputModel : PageModel
     {
         [BindProperty]
-        public UserInputModel Input { get; set; }
+        public UserDTO User { get; set; }
 
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string CreatedDate { get; set; }
+        private readonly IUserService _userService;
 
-        private readonly IUserRepository _userRepository;
-
-        public IndexInputModel(IUserRepository userRepository)
+        public IndexInputModel(IUserService userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
         public void OnGet()
         {
-            var user = _userRepository.GetAll().LastOrDefault();
-            FirstName = user.FirstName;
-            LastName = user.LastName;
-            CreatedDate = user.CreatedDate.ToShortDateString();
+            User = _userService.GetLastUser();
+
         }
         public void OnPostSave()
         {
-            if (!ModelState.IsValid)
-            {
-                return;
-            }
 
-            var User = new DAL.Entities.User
-            {
-                FirstName = Input.FirstName,
-                LastName = Input.LastName,
-                CreatedDate = DateTime.Now,
-            };
-
-            _userRepository.AddUser(User);
+            _userService.Save(User);
 
             this.OnGet();
 
         }
         public void OnPostDelete()
         {
-            FirstName = "";
+            User.FirstName = string.Empty;
+            User.LastName = string.Empty;
+            User.CreatedDate = string.Empty;
         }
     }
 }

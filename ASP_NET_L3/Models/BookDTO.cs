@@ -2,8 +2,10 @@
 
 namespace ASP_NET_L3.Models
 {
-    public class BookInputModel
+    public class BookDTO
     {
+        public int Id { get; set; }
+
         [Required]
         [MinLength(2)]
         public string Title { get; set; }
@@ -21,5 +23,7 @@ namespace ASP_NET_L3.Models
 
         [Required]
         public int AuthorId { get; set; }
+
+        public string AuthorFullName { get; set; }
     }
 }

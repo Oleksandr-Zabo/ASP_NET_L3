@@ -176,21 +176,21 @@
             <h2>Add Author</h2>
             <form method="post" asp-page-handler="SaveAuthor">
                 <div class="form-group">
-                    <label asp-for="AuthorInput.FirstName">First Name*</label>
-                    <input asp-for="AuthorInput.FirstName" type="text" placeholder="Enter first name" />
-                    <span asp-validation-for="AuthorInput.FirstName" class="validation-error"></span>
+                    <label asp-for="Author.FirstName">First Name*</label>
+                    <input asp-for="Author.FirstName" type="text" placeholder="Enter first name" />
+                    <span asp-validation-for="Author.FirstName" class="validation-error"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="AuthorInput.LastName">Last Name*</label>
-                    <input asp-for="AuthorInput.LastName" type="text" placeholder="Enter last name" />
-                    <span asp-validation-for="AuthorInput.LastName" class="validation-error"></span>
+                    <label asp-for="Author.LastName">Last Name*</label>
+                    <input asp-for="Author.LastName" type="text" placeholder="Enter last name" />
+                    <span asp-validation-for="Author.LastName" class="validation-error"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="AuthorInput.BirthDate">Birth Date*</label>
-                    <input asp-for="AuthorInput.BirthDate" type="date" />
-                    <span asp-validation-for="AuthorInput.BirthDate" class="validation-error"></span>
+                    <label asp-for="Author.BirthDate">Birth Date*</label>
+                    <input asp-for="Author.BirthDate" type="date" />
+                    <span asp-validation-for="Author.BirthDate" class="validation-error"></span>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Save Author</button>
@@ -202,32 +202,32 @@
             <h2>Add Book</h2>
             <form method="post" asp-page-handler="SaveBook">
                 <div class="form-group">
-                    <label asp-for="BookInput.Title">Title*</label>
-                    <input asp-for="BookInput.Title" type="text" placeholder="Enter book title" />
-                    <span asp-validation-for="BookInput.Title" class="validation-error"></span>
+                    <label asp-for="Book.Title">Title*</label>
+                    <input asp-for="Book.Title" type="text" placeholder="Enter book title" />
+                    <span asp-validation-for="Book.Title" class="validation-error"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="BookInput.ISBN">ISBN*</label>
-                    <input asp-for="BookInput.ISBN" type="text" placeholder="978-XXXXXXXXXX" />
-                    <span asp-validation-for="BookInput.ISBN" class="validation-error"></span>
+                    <label asp-for="Book.ISBN">ISBN*</label>
+                    <input asp-for="Book.ISBN" type="text" placeholder="978-XXXXXXXXXX" />
+                    <span asp-validation-for="Book.ISBN" class="validation-error"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="BookInput.PublishYear">Publish Year*</label>
-                    <input asp-for="BookInput.PublishYear" type="number" min="1450" max="2026" placeholder="e.g., 2024" />
-                    <span asp-validation-for="BookInput.PublishYear" class="validation-error"></span>
+                    <label asp-for="Book.PublishYear">Publish Year*</label>
+                    <input asp-for="Book.PublishYear" type="number" min="1450" max="2026" placeholder="e.g., 2024" />
+                    <span asp-validation-for="Book.PublishYear" class="validation-error"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="BookInput.Price">Price</label>
-                    <input asp-for="BookInput.Price" type="number" step="0.01" min="0" placeholder="e.g., 29.99" />
-                    <span asp-validation-for="BookInput.Price" class="validation-error"></span>
+                    <label asp-for="Book.Price">Price</label>
+                    <input asp-for="Book.Price" type="number" step="0.01" min="0" placeholder="e.g., 29.99" />
+                    <span asp-validation-for="Book.Price" class="validation-error"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="BookInput.AuthorId">Author*</label>
-                    <select asp-for="BookInput.AuthorId">
+                    <label asp-for="Book.AuthorId">Author*</label>
+                    <select asp-for="Book.AuthorId">
                         <option value="">-- Select Author --</option>
                         @if (Model.AllAuthors != null)
                         {
@@ -237,7 +237,7 @@
                             }
                         }
                     </select>
-                    <span asp-validation-for="BookInput.AuthorId" class="validation-error"></span>
+                    <span asp-validation-for="Book.AuthorId" class="validation-error"></span>
                 </div>
 
                 <button type="submit" class="btn btn-success">Save Book</button>
